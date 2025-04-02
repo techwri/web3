@@ -85,7 +85,6 @@ DeFi даёт возможность пользователям получать
    :caption: Содержание:
 
    ru/yearn-v3/index
-   ru/links
    ru/about_project/index
    ru/glossary
 
