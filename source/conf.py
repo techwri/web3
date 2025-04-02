@@ -35,7 +35,10 @@ plantuml_output_format = "png"
 
 templates_path = ["_templates"]
 exclude_patterns = []
-languages = ["ru", "en"]  # Список поддерживаемых языков
+language = "ru"  # только один язык
+gettext_uuid = True
+gettext_compact = False
+locale_dirs = []
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
