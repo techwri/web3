@@ -27,7 +27,7 @@ jobs:
 
       # Запуск сборки Docker-образа
       - name: Build Docker
-        run: docker build --tag techwriters:latest .
+        run: docker build --tag web3:latest .
 
   # Задача проверки корректности сборки сайта
   build-site:

@@ -30,7 +30,6 @@ extensions = [
     "sphinx_tabs.tabs",
     "sphinx.ext.graphviz",
     "sphinxcontrib.plantuml",
-    "sphinxcontrib.googleanalytics",
 ]
 plantuml_output_format = "png"
 
