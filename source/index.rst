@@ -84,7 +84,7 @@ DeFi даёт возможность пользователям получать
    :maxdepth: 1
    :caption: Содержание:
 
-   ru/yearn-v3
+   ru/yearn-v3/index
    ru/links
    ru/about_project/index
    ru/glossary
