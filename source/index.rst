@@ -77,15 +77,14 @@ DeFi даёт возможность пользователям получать
 С наилучшими пожеланиями,
 Евгений Захаренко, автор проекта web3.TechWriters.ru
 
+Русскоязычная документация по Web3
+----------------------------------
+
 .. toctree::
    :maxdepth: 1
    :caption: Содержание:
 
-   ru/technical_writer/index
-   ru/tools_and_technologies/index
-   ru/documentation_development/index
-   ru/learning
-   ru/books
+   ru/yearn-v3
    ru/links
    ru/about_project/index
    ru/glossary
