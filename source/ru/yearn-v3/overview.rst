@@ -44,6 +44,13 @@
    :align: center
    :width: 600px
 
+и еще картинка
+
+.. figure:: /_static/img/yearn-v3/overview_diagram.png
+       :align: center
+       :alt: Обзор Yearn V3
+
+       Обзор Yearn V3
 
 ****
 
