@@ -114,6 +114,7 @@ V3 поддерживает "periphery contracts" — расширяемые м�
 Дополнительно
 -------------
 
+
 - `GitHub Vaults V3 <https://github.com/yearn/yearn-vaults-v3>`_
 - `Tokenized Strategy Repo <https://github.com/yearn/tokenized-strategy>`_
 - `Yearn V3 Design (Medium) <https://medium.com/yearn/yearn-v3-architecture>`_
