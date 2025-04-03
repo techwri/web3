@@ -67,12 +67,13 @@ V3 поддерживает "periphery contracts" — расширяемые м�
 С чего начать
 -------------
 
-- Ознакомьтесь с:
-  - :doc:`Интеграцией V3 <integrating-v3-vaults>`
-  - :doc:`Созданием Tokenized Strategy <creating-v3-tokenized-strategies>`
-  - :doc:`Развёртыванием и управлением Vault <deploying-v3-multi-strategy-vault>`
-  - :doc:`Периферийными контрактами <periphery>`
-  - :doc:`Комиссиями протокола <protocol-fees>`
+Ознакомьтесь с:
+
+- :doc:`Интеграцией V3 <integrating-v3-vaults>`
+- :doc:`Созданием Tokenized Strategy <creating-v3-tokenized-strategies>`
+- :doc:`Развёртыванием и управлением Vault <deploying-v3-multi-strategy-vault>`
+- :doc:`Периферийными контрактами <periphery>`
+- :doc:`Комиссиями протокола <protocol-fees>`
 
 Контракты можно найти по адресу: :doc:`v3-contract-addresses`
 

@@ -11,3 +11,8 @@ Yearn V3
    strategies
    interfaces
    glossary
+   integrating-v3-vaults
+   creating-v3-tokenized-strategies
+   deploying-v3-multi-strategy-vault
+   periphery
+   protocol-fees
