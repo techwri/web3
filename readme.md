@@ -1,5 +1,7 @@
 # Russian Documentation Hub for Web3 & DeFi
 
+Copyright (c) 2005-2023, Evgeny Zakharenko, TechWriters.ru info@techwriters.ru
+
 Welcome, an open initiative to make complex Web3 and DeFi protocols accessible for the Russian-speaking community.
 
 ## 🌍 Mission
@@ -17,13 +19,18 @@ To create high-quality, open-source documentation, guides, glossaries, and educa
 - ✅ Live website with glossary and index
 - ✅ Automated deployment and open GitHub repository
 - ✅ Web3 & DeFi comparison article (available at homepage)
-- 📹 YouTube: [@ThisWeb3](https://www.youtube.com/@ThisWeb3)
+
 
 ## 📅 Roadmap
 See [ru/about_project/roadmap](./source/ru/about_project/roadmap.rst) for details
 
 ## 📖 Website
 > 🌐 http://web3.techwriters.ru/
+
+## Community
+
+💬 Join the discussion and contribute ideas in our Telegram chat "Technical Writers Community of Russia": [t.me/twriters](https://t.me/twriters)  
+🌐 Technical Writers Community of Russia [techwriters.ru](http://techwriters.ru)
 
 ## 🤝 Contributing
 Pull requests are welcome! If you'd like to suggest improvements, translate protocols, or collaborate — open an issue or contact us.
