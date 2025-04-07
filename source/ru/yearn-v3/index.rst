@@ -7,12 +7,5 @@ Yearn V3
    :maxdepth: 1
 
    overview
-   vaults
-   strategies
-   interfaces
+   integrating_v3
    glossary
-   integrating-v3-vaults
-   creating-v3-tokenized-strategies
-   deploying-v3-multi-strategy-vault
-   periphery
-   protocol-fees
