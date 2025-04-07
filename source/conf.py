@@ -50,7 +50,7 @@ html_title = "web3.TechWriters.ru"  # название сайта
 html_static_path = ["_static"]  # путь к статичным файлам
 html_css_files = ["custom.css"]  # путь к костомизированным файлам стиля
 html_theme_options = {
-    "repository_url": "https://github.com/techwri/techwritersweb",
+    "repository_url": "https://github.com/techwri/web3",
     "use_source_button": True,
     "repository_branch": "develop",
     "path_to_docs": "source",
