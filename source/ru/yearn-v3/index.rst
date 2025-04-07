@@ -8,4 +8,5 @@ Yearn V3
 
    overview
    integrating_v3
+   periphery.rst
    glossary
