@@ -41,12 +41,12 @@ jobs:
       - name: Buils Sphinx project
         run: make html
 
-      # Загрузка собранного проекта на хостинг
-      - name: Upload to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        with:
-          server: ${{ secrets.FTP_HOST }}  # Используется секрет с адресом FTP-сервера
-          username: ${{ secrets.FTP_USERNAME }}  # Используется секрет с именем пользователя
-          password: ${{ secrets.FTP_PASSWORD }}  # Используется секрет с паролем
-          server-dir: web3.techwriters.ru/  # Путь на FTP-сервере, куда загружать файлы
-          local-dir: build/html/  # Путь к сгенерированным файлам, которые будут загружены
+      # ====== ВЫГРУЗКА НА FTP ВРЕМЕННО ОТКЛЮЧЕНА ======
+      # - name: Upload to FTP
+      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      #   with:
+      #     server: ${{ secrets.FTP_HOST }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     server-dir: web3.techwriters.ru/
+      #     local-dir: build/html/
