@@ -168,7 +168,7 @@ read -r -d '' build_json <<JSON || true
 JSON
 
 resp="$(curl -sS -X POST "$DM_URL/api/ingest/build" -H "Content-Type: application/json" -d "$build_json" || true)"
-build_id="$(printf '%s' "$resp" | parse_build_id)"
+build_id="$(echo "$resp" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("build_id",""))')"
 if [ -z "$build_id" ]; then
   echo "DocMonitor ingest/build failed or returned no build_id. Response: $resp" >&2
   # do not exit; continue to keep original build exit-code semantics
