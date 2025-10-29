@@ -66,18 +66,23 @@ BUILD_ID=$(curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/build" \
 if [ -n "$BUILD_ID" ]; then
   echo "✅ Metrics sent (build_id: $BUILD_ID)"
   # -------- Отправка логов --------
-  echo "📋 Uploading build logs..."
-  curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/logs" \
-    -H "Content-Type: application/json" \
-    -d "{
-      \"build_id\": \"$BUILD_ID\",
-      \"kind\": \"$BUILD_SYSTEM\",
-      \"stdout\": $(jq -Rs . < \"$TMP_LOG\"),
-      \"stderr\": \"\"
-    }" >/dev/null || true
+  if [ -f "$TMP_LOG" ]; then
+    echo "📋 Uploading build logs..."
+    curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/logs" \
+      -H "Content-Type: application/json" \
+      -d "{
+        \"build_id\": \"$BUILD_ID\",
+        \"kind\": \"$BUILD_SYSTEM\",
+        \"stdout\": $(jq -Rs . < \"$TMP_LOG\"),
+        \"stderr\": \"\"
+      }" >/dev/null || true
+    rm -f "$TMP_LOG"
+  else
+    echo "⚠️  Log file not found, skipping upload."
+  fi
 else
   echo "⚠️  Failed to reach DocMonitor — metrics not saved."
+  [ -f "$TMP_LOG" ] && rm -f "$TMP_LOG"
 fi
 
-rm -f "$TMP_LOG"
 echo "🏁 Build finished: $STATUS (warnings: $WARNINGS, errors: $ERRORS, duration: ${DURATION}s)"
