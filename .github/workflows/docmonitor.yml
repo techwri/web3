@@ -1,68 +1,30 @@
-name: Build testing site and deploy to FTP + DocMonitor
+name: Build Docs and Send Metrics
 
 on:
   push:
-    branches:
-      - develop
-  workflow_dispatch:
+    branches: [ develop, main ]
+  pull_request:
 
 jobs:
-  build-and-deploy-prod:
+  build-docs:
     runs-on: ubuntu-latest
-
-    env:
-      DOCMONITOR_URL: ${{ secrets.DOCMONITOR_URL }}
-      DOCMONITOR_PROJECT: techwri/web3
-      DOCMONITOR_REPO_URL: https://github.com/techwri/web3
-      DOCMONITOR_BRANCH: ${{ github.ref_name }}
-      DOCMONITOR_COMMIT: ${{ github.sha }}
-      DOCMONITOR_SYSTEM: Sphinx
-
     steps:
-      # Получение кода
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # (опционально) обновить APT
-      - name: Update APT index
-        run: sudo apt-get update
-
-      # Пакеты для сборки Sphinx
-      - name: Install make, graphviz and JRE
-        run: sudo apt-get install make graphviz default-jre --yes --no-install-recommends
-
-      # Python
-      - name: Install Python 3.x
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.11"
 
-      # Python deps
-      - name: Update PIP and install requirements
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip3 install -r requirements.txt || true
-          # На случай, если в requirements нет sphinx:
-          pip3 install sphinx || true
+          pip install -r requirements.txt || true
+          pip install sphinx || true
 
-      # Выполняем сборку через агент DocMonitor — он соберёт stdout/stderr и отправит статус/логи
-      - name: Send build logs to DocMonitor (make html)
+      - name: Run DocMonitor Lite Agent
+        env:
+          DOCMONITOR_URL: "http://localhost:8000"  # или твой внешний API
         run: |
           chmod +x .github/docmonitor/dmci-lite.sh
-          .github/docmonitor/dmci-lite.sh 'make html'
-
-      # (опционально) rstcheck → DocMonitor
-      # - name: rstcheck → DocMonitor
-      #   run: |
-      #     pip3 install rstcheck || true
-      #     .github/docmonitor/dmci-lite.sh 'rstcheck -r . || true'
-
-      # ====== ВЫГРУЗКА НА FTP ВРЕМЕННО ОТКЛЮЧЕНА ======
-      # - name: Upload to FTP
-      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      #   with:
-      #     server: ${{ secrets.FTP_HOST }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     server-dir: web3.techwriters.ru/
-      #     local-dir: build/html/
+          .github/docmonitor/dmci-lite.sh
