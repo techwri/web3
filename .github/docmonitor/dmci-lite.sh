@@ -63,17 +63,18 @@ BUILD_ID=$(curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/build" \
     -H "Content-Type: application/json" \
     -d "$JSON_PAYLOAD" | jq -r '.build_id // empty' || true)
 
+# -------- Отправка логов и очистка --------
 if [ -n "$BUILD_ID" ]; then
   echo "✅ Metrics sent (build_id: $BUILD_ID)"
-  # -------- Отправка логов --------
   if [ -f "$TMP_LOG" ]; then
     echo "📋 Uploading build logs..."
+    LOG_CONTENT=$(cat "$TMP_LOG" | jq -Rs .)
     curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/logs" \
       -H "Content-Type: application/json" \
       -d "{
         \"build_id\": \"$BUILD_ID\",
         \"kind\": \"$BUILD_SYSTEM\",
-        \"stdout\": $(jq -Rs . < \"$TMP_LOG\"),
+        \"stdout\": $LOG_CONTENT,
         \"stderr\": \"\"
       }" >/dev/null || true
     rm -f "$TMP_LOG"
