@@ -41,7 +41,7 @@ jobs:
       - name: Buils Sphinx project
         run: make html
 
-      # Отправка метрик этой сборки в DocMonitor
+      # Отправка метрик этой сборки в  DocMonitor
       - name: Send build metrics to DocMonitor
         if: always()
         env:
