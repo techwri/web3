@@ -6,4 +6,7 @@ Yearn V3
 .. toctree::
    :maxdepth: 1
 
-
+   overview
+   integrating_v3
+   periphery
+   glossary
