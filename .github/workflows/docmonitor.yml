@@ -24,7 +24,7 @@ jobs:
 
       - name: Run DocMonitor Lite Agent
         env:
-          DOCMONITOR_URL: "http://host.docker.internal:8000"  # или твой внешний API
+          DOCMONITOR_URL: "https://irradiatingly-unsoothed-adah.ngrok-free.dev"  # или твой внешний API
         run: |
           chmod +x .github/docmonitor/dmci-lite.sh
           .github/docmonitor/dmci-lite.sh
