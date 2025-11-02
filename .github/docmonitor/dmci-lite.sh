@@ -53,15 +53,14 @@ JSON_PAYLOAD=$(cat <<EOF
   "duration_sec": $DURATION,
   "warnings": $WARNINGS,
   "errors": $ERRORS,
-  "env": {"runner": "$(hostname)", "ci": "${CI:-none}"},
-  "tags": {"build_type": "auto", "trigger": "dmci-lite"}
+  "log": $(jq -Rs . < "$TMP_LOG")
 }
 EOF
 )
 
-BUILD_ID=$(curl -s -m 10 -X POST "$DOCMONITOR_URL/api/ingest/build" \
-    -H "Content-Type: application/json" \
-    -d "$JSON_PAYLOAD" | jq -r '.build_id // empty' || true)
+curl -s -m 20 -X POST "$DOCMONITOR_URL/api/builds" \
+  -H "Content-Type: application/json" \
+  -d "$JSON_PAYLOAD" | jq .
 
 # -------- Отправка логов и очистка --------
 if [ -n "$BUILD_ID" ]; then
