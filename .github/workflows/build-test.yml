@@ -41,6 +41,18 @@ jobs:
       - name: Buils Sphinx project
         run: make html
 
+      # Отправка метрик этой сборки в  DocMonitor
+      - name: Send build metrics to DocMonitor
+        if: always()
+        env:
+          DOCMONITOR_URL: "https://irradiatingly-unsoothed-adah.ngrok-free.dev"
+          DOCMONITOR_PROJECT: "web3"
+          DOCMONITOR_BRANCH: ${{ github.ref_name }}
+          DOCMONITOR_COMMIT: ${{ github.sha }}
+        run: |
+          chmod +x .github/docmonitor/dmci-lite.sh
+          .github/docmonitor/dmci-lite.sh "noop"
+
       # ====== ВЫГРУЗКА НА FTP ВРЕМЕННО ОТКЛЮЧЕНА ======
       # - name: Upload to FTP
       #   uses: SamKirkland/FTP-Deploy-Action@4.3.0

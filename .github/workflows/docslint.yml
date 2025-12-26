@@ -1,4 +1,4 @@
-name: Build Docs and Send Metrics
+name: DocMonitor Metrics
 
 on:
   push:
