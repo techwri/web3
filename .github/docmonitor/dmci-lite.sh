@@ -87,3 +87,4 @@ fi
 
 rm -f "$TMP_LOG" || true
 echo "🏁 Build finished: $STATUS (warnings: $WARNINGS, errors: $ERRORS, duration: ${DURATION}s)"
+
