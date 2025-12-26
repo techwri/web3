@@ -22,9 +22,10 @@ jobs:
           pip install -r requirements.txt || true
           pip install sphinx || true
 
-      - name: Run DocMonitor Lite Agent
+      - name: Run DocsLint Lite Agent
+        if: ${{ secrets.DOCSLINT_URL != '' }}
         env:
-          DOCMONITOR_URL: "https://irradiatingly-unsoothed-adah.ngrok-free.dev"  # или твой внешний API
+          DOCSLINT_URL: ${{ secrets.DOCSLINT_URL }}
         run: |
-          chmod +x .github/docmonitor/dmci-lite.sh
-          .github/docmonitor/dmci-lite.sh
+          chmod +x .github/docslint/dmci-lite.sh
+          .github/docslint/dmci-lite.sh
