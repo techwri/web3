@@ -1,6 +1,6 @@
 # Установка зависимостей для сборки документации
 
-setuptools
+setuptools==68.2.0
 sphinx==6.2.1
 sphinx-book-theme==1.0.1
 sphinx-tabs==3.4.1
