@@ -23,25 +23,28 @@ jobs:
 
       # Установка пакетов, необходимых для сборки сайта
       - name: Install make, graphviz and JRE
-        run: sudo apt-get install make graphviz default-jre --yes --no-install-recommends
+        run: sudo apt-get install -y --no-install-recommends make graphviz default-jre
 
-      # Установка актуальной версии Python
-      - name: Install Python 3.x
-        uses: actions/setup-python@v4
+      # Установка Python (фиксируем версию, чтобы сборка была стабильной)
+      - name: Install Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
-      # Обновление PIP и установка Python-модулей, указанных в файле requirements.txt
+      # Обновление PIP и установка зависимостей (всё через один и тот же python)
       - name: Update PIP and install requirements
         run: |
-          python -m pip install --upgrade pip
-          pip3 install -r requirements.txt
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -r requirements.txt
+          python -c "import pkg_resources; print('pkg_resources OK')"
 
       # Сборка проекта в формате html
-      - name: Buils Sphinx project
-        run: make html
+      - name: Build Sphinx project
+        run: |
+          python -m sphinx --version
+          make html
 
-      # Отправка метрик этой сборки в  DocMonitor
+      # Отправка метрик этой сборки в DocMonitor
       - name: Send build metrics to DocMonitor
         if: always()
         env:
