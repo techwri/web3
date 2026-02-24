@@ -44,11 +44,11 @@ jobs:
           python -m sphinx --version
           make html
 
-      # Отправка метрик этой сборки в DocMonitor
-      - name: Send build metrics to DocMonitor
+      # Отправка метрик этой сборки в Docslint
+      - name: Send build metrics to Docslint
         if: always()
         env:
-          DOCMONITOR_URL: "https://irradiatingly-unsoothed-adah.ngrok-free.dev"
+          DOCMONITOR_URL: "https://docslint.com/"
           DOCMONITOR_PROJECT: "web3"
           DOCMONITOR_BRANCH: ${{ github.ref_name }}
           DOCMONITOR_COMMIT: ${{ github.sha }}
