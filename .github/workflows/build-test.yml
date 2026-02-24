@@ -48,10 +48,10 @@ jobs:
       - name: Send build metrics to Docslint
         if: always()
         env:
-          DOCMONITOR_URL: "https://docslint.com/"
-          DOCMONITOR_PROJECT: "web3"
-          DOCMONITOR_BRANCH: ${{ github.ref_name }}
-          DOCMONITOR_COMMIT: ${{ github.sha }}
+          DOCSLINT_URL: "https://docslint.com/"
+          DOCSLINT_PROJECT: "web3"
+          DOCSLINT_BRANCH: ${{ github.ref_name }}
+          DOCSLINT_COMMIT: ${{ github.sha }}
         run: |
           chmod +x .github/docmonitor/dmci-lite.sh
           .github/docmonitor/dmci-lite.sh "noop"
