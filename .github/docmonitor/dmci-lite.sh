@@ -7,7 +7,10 @@ have_cmd() { command -v "$1" >/dev/null 2>&1; }
 
 echo "🚀 Docslint Lite Agent starting..."
 
+# нормализуем базовый URL (убираем хвостовой /)
 DOCSLINT_URL="${DOCSLINT_URL:-http://localhost:8810}"
+DOCSLINT_URL="${DOCSLINT_URL%/}"
+
 DOCSLINT_PROJECT="${DOCSLINT_PROJECT:-$(basename "$(pwd)")}"
 
 ORIGIN_URL="$(git remote get-url origin 2>/dev/null || true)"
@@ -65,15 +68,32 @@ EOF
 )
 
 echo "📤 Sending build metrics to Docslint ($DOCSLINT_URL)..."
-BUILD_ID=$(curl -s -m 10 -X POST "$DOCSLINT_URL/api/ingest/build" \
-  -H "Content-Type: application/json" \
-  -d "$JSON_PAYLOAD" | jq -r '.build_id // empty' || true)
 
-if [ -n "$BUILD_ID" ] && [ -f "$TMP_LOG" ]; then
+# делаем запрос с диагностикой HTTP-кода и тела ответа
+RESP="$(curl -sS -m 20 -w "\n%{http_code}" -X POST "$DOCSLINT_URL/api/ingest/build" \
+  -H "Content-Type: application/json" \
+  -d "$JSON_PAYLOAD" || true)"
+
+HTTP_CODE="$(echo "$RESP" | tail -n1)"
+BODY="$(echo "$RESP" | sed '$d')"
+
+BUILD_ID="$(echo "$BODY" | jq -r '.build_id // empty' 2>/dev/null || true)"
+
+if [ -z "$BUILD_ID" ]; then
+  echo "⚠️  Docslint ingest did not return build_id (HTTP $HTTP_CODE)."
+  echo "Body (first 300 chars): $(echo "$BODY" | head -c 300)"
+  rm -f "$TMP_LOG" || true
+  echo "🏁 Build finished: $STATUS (warnings: $WARNINGS, errors: $ERRORS, duration: ${DURATION}s)"
+  exit 0
+fi
+
+if [ -f "$TMP_LOG" ]; then
   echo "✅ Metrics sent (build_id: $BUILD_ID)"
   echo "📋 Uploading build logs..."
-  LOG_CONTENT=$(jq -Rs . < "$TMP_LOG")
-  curl -s -m 10 -X POST "$DOCSLINT_URL/api/ingest/logs" \
+
+  LOG_CONTENT="$(jq -Rs . < "$TMP_LOG")"
+
+  curl -sS -m 20 -X POST "$DOCSLINT_URL/api/ingest/logs" \
     -H "Content-Type: application/json" \
     -d "{
       \"build_id\": \"$BUILD_ID\",
@@ -81,10 +101,7 @@ if [ -n "$BUILD_ID" ] && [ -f "$TMP_LOG" ]; then
       \"stdout\": $LOG_CONTENT,
       \"stderr\": \"\"
     }" >/dev/null || true
-else
-  echo "⚠️  Failed to reach Docslint — metrics not saved."
 fi
 
 rm -f "$TMP_LOG" || true
 echo "🏁 Build finished: $STATUS (warnings: $WARNINGS, errors: $ERRORS, duration: ${DURATION}s)"
-
