@@ -50,7 +50,6 @@ jobs:
         env:
           DOCSLINT_URL: "https://docslint.com/"
           DOCSLINT_PROJECT: "web3"
-          DOCSLINT_REPO_URL: "https://github.com/techwri/web3"
           DOCSLINT_BRANCH: ${{ github.ref_name }}
           DOCSLINT_COMMIT: ${{ github.sha }}
         run: |
